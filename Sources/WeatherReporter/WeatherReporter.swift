@@ -1,3 +1,4 @@
-struct WeatherReporter {
-    var text = "Hello, World!"
+class WeatherReporter {
+
+
 }
