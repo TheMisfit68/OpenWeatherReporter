@@ -14,12 +14,19 @@ public class OpenWeatherReporter {
     
     let standardUserDefaults = UserDefaults.standard
     
-    var reportPublisher:AnyPublisher<TwoDayHourlyForecast?, Error>!
+    var reportPublisher:AnyPublisher<OpenWeatherTwoDayHourlyForecast?, Error>!
     var reportReceiver:Cancellable!
     
     var restAPI:RestAPI<OpenWeatherReportType, OpenWeatherReportParameter>
     
-    public var twoDayHourlyReport:TwoDayHourlyForecast?
+    public var twoDayHourlyReport:OpenWeatherTwoDayHourlyForecast!
+    public var rainingNow:Bool{
+        twoDayHourlyReport.current.weather.first?.main == .rain
+    }
+    
+    public var rainIsExpected:Bool{
+        rainingNow || true
+    }
     
     public init(){
         
@@ -57,7 +64,6 @@ public class OpenWeatherReporter {
                 
             },receiveValue: {value in
                 if let report = value{
-                    print("-------\(report)")
                     switch reportType {
                     case .twoDayHourlyReport:
                         self.twoDayHourlyReport = report

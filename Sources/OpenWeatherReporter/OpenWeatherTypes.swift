@@ -42,7 +42,6 @@ public enum OpenWeatherUnit:String, StringRepresentableEnum{
     
 }
 
-
 public enum OpenWeatherLanguage:String, StringRepresentableEnum{
     
     case Afrikaans = "af"
