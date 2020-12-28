@@ -20,7 +20,7 @@ public enum OpenWeatherReportParameter:String, StringRepresentableEnum{
     case longitude = "lon"
     case exclude
     case units
-    case language = "lan"
+    case language = "lang"
     case apiKey = "appid"
 }
 
