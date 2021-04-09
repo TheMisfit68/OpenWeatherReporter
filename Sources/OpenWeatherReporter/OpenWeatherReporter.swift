@@ -9,12 +9,11 @@ import Foundation
 import Combine
 import JVCocoa
 
-
 public class OpenWeatherReporter:Singleton {
-    
-    public static var shared:OpenWeatherReporter = OpenWeatherReporter()
 
-    let standardUserDefaults = UserDefaults.standard
+	
+	
+    public static var shared:OpenWeatherReporter = OpenWeatherReporter()
     
     static let InvertersDataFileName = "WeatherData.sqlite"
     
@@ -28,7 +27,7 @@ public class OpenWeatherReporter:Singleton {
     var reportPublisher:AnyPublisher<OpenWeatherTwoDayHourlyForecast?, Error>!
     var reportReceiver:Cancellable!
     
-    var restAPI:RestAPI<OpenWeatherReportType, OpenWeatherReportParameter>
+    var restAPI:RestAPI<OpenWeatherReportType, OpenWeatherReportParameter>!
     
     public var twoDayHourlyReport:OpenWeatherTwoDayHourlyForecast!{
         didSet{
@@ -53,18 +52,9 @@ public class OpenWeatherReporter:Singleton {
         if let dbasePath =  OpenWeatherReporter.WeatherDataFile?.path, OpenWeatherReporter.DefaultFilemanager.fileExists(atPath: dbasePath){
             OpenWeatherReporter.WeatherDataBase = SQLdatabase.Open(file:dbasePath)
         }
-
-        let userSettings:[String:Any] = standardUserDefaults.dictionary(forKey: "OpenWeatherSettings") ?? [:]
-        
-        var userParameters:[OpenWeatherReportParameter:String] = [:]
-        userParameters[.latitude] = userSettings["Latitude"] as? String ?? "37.345657"
-        userParameters[.longitude] = userSettings["Longitude"] as? String ?? "-95.41122"
-        userParameters[.language] =  OpenWeatherLanguage.English.rawValue
-        userParameters[.units] = userSettings["Units"] as? String ?? OpenWeatherUnit.standard.rawValue
-        userParameters[.apiKey] = userSettings["ApiKey"] as? String ?? "myAPIkey"
         
         let openWeatherProtocol = OpenWeatherProtocol()
-        restAPI = RestAPI<OpenWeatherReportType, OpenWeatherReportParameter>(baseURL: openWeatherProtocol.baseURL, endpointParameters: openWeatherProtocol.requiredCommandParameters,baseParameters: userParameters)
+		self.restAPI = RestAPI<OpenWeatherReportType, OpenWeatherReportParameter>(baseURL: openWeatherProtocol.baseURL, endpointParameters: openWeatherProtocol.requiredCommandParameters,baseParameters: preferences)
         
     }
     
