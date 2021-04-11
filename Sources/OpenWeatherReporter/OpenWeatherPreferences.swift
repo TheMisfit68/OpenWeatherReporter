@@ -26,11 +26,11 @@ extension OpenWeatherReporter:PreferenceBased {
 		
 		var preferences:[OpenWeatherReportParameter:String] = [:]
 		
-		preferences[.latitude] = getPreference(forKey: .openWeatherSettings, secondaryKey: .latitude) ?? "37.345657"
-		preferences[.longitude] = getPreference(forKey: .openWeatherSettings, secondaryKey: .longitude) ?? "-95.41122"
-		preferences[.language] = getPreference(forKey: .openWeatherSettings, secondaryKey: .language) ?? OpenWeatherLanguage.English.rawValue
-		preferences[.units] = getPreference(forKey: .openWeatherSettings, secondaryKey: .units) ?? OpenWeatherUnit.standard.rawValue
-		preferences[.apiKey] = getPreference(forKey: .openWeatherSettings, secondaryKey: .apiKey) ?? "myAPIkey"
+		preferences[.latitude] = getPreference(forKeyPath: .openWeatherSettings, .latitude) ?? "37.345657"
+		preferences[.longitude] = getPreference(forKeyPath: .openWeatherSettings, .longitude) ?? "-95.41122"
+		preferences[.language] = getPreference(forKeyPath: .openWeatherSettings, .language) ?? OpenWeatherLanguage.English.rawValue
+		preferences[.units] = getPreference(forKeyPath: .openWeatherSettings, .units) ?? OpenWeatherUnit.standard.rawValue
+		preferences[.apiKey] = getPreference(forKeyPath: .openWeatherSettings, .apiKey) ?? "myAPIkey"
 		
 		return preferences
 	}
